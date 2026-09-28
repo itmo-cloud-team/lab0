@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Aircraft Registry</title>
+    </head>
+    <body>
+        <h1>TeamAirline Aircraft Registry</h1>
+        <h3>1. Add an aircraft</h3>
+        <p><label for="tailNumber">Tail Number:</label>
+        <input type="text" id="tailNumber" name="tailNumber"></p>
+            
+        <p><label for="productionDate">Production Date:</label>
+        <input type="date" id="productionDate" name="productionDate"></p>
+            
+        <p><label for="icaoAircraftType">ICAO Aircraft Type:</label>
+        <input type="text" id="icaoAircraftType" name="icaoAircraftType"></p>
+
+        <input value="Submit" type="submit" onclick="submit_aircraft()">
+        <p id="status"></p>
+
+        <h3>2. Our fleet</h3>
+        <table border="1">
+            <thead>
+                <td>Tail Number</td>
+                <td>Production Date</td>
+                <td>Aircraft Type</td>
+            </thead>
+            <tbody id="aircraftTableBody">
+            </tbody>
+        </table>
+    </body>
+
+    <script>
+        fetch('/api/list')
+            .then(response => response.json())
+            .then(data => {
+                const table = document.getElementById("aircraftTableBody");
+                for (const aircraft of data.fleet) {
+                    table.insertAdjacentHTML('beforeend', `
+                        <tr>
+                            <td>${aircraft.tailNumber}</td>
+                            <td>${aircraft.productionDate}</td>
+                            <td>${aircraft.icaoAircraftType}</td>
+                        </tr>
+                    `);
+                }
+            });
+
+        function submit_aircraft() {
+            const tailNumber = document.getElementById("tailNumber").value,
+                  productionDate = document.getElementById("productionDate").value,
+                  aircraftType = document.getElementById("icaoAircraftType").value;
+            
+            const timestamp = Math.floor(
+                new Date(productionDate + 'T00:00:00Z').getTime() / 1000
+            );
+            
+            fetch('/api/enlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    tailNumber: tailNumber,
+                    productionDate: timestamp,
+                    icaoAircraftType: aircraftType
+                })
+            }).then(response => {
+                const statusLabel = document.getElementById("status");
+                if (response.ok)
+                    statusLabel.innerText = "Success.";
+                else if (response.status == 409)
+                    statusLabel.innerText = "Tail number already exists.";
+                else
+                    statusLabel.innerText = "Server error.";
+
+                setTimeout(() => { location.reload(); }, 2000);
+            });
+        }
+    </script>
+</html>

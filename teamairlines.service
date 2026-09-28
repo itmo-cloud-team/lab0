@@ -1,0 +1,14 @@
+[Unit]
+Description=TeamAirlines App
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=%username%
+ExecStart=/var/teamairlines/start.sh
+
+[Install]
+WantedBy=multi-user.target
