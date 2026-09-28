@@ -46,6 +46,7 @@ mv config.json.sample config.json
 
 mariadb -u mysql --password=$db_password < init.sql
 
+sed -i "s/%dir%/$(pwd)/g" teamairlines.service
 sed -i "s/%username%/$username/g" teamairlines.service
 cp teamairlines.service /etc/systemd/system/
 
