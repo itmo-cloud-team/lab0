@@ -1,4 +1,4 @@
-ALTER USER 'mysql'@'localhost' IDENTIFIED BY '1';
+ALTER USER 'mysql'@'localhost' IDENTIFIED BY '%db_password%';
 
 CREATE DATABASE IF NOT EXISTS aircraft CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 GRANT ALL PRIVILEGES ON aircraft.* TO 'mysql'@'localhost';
