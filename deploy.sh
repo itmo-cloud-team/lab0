@@ -50,4 +50,5 @@ sed -i "s/%dir%/$(pwd)/g" teamairlines.service
 sed -i "s/%username%/$username/g" teamairlines.service
 cp teamairlines.service /etc/systemd/system/
 
+chmod +x start.sh
 systemctl enable --now teamairlines.service
