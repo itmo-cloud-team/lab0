@@ -8,7 +8,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=%username%
-ExecStart=/var/teamairlines/start.sh
+ExecStart=%dir%/start.sh
 
 [Install]
 WantedBy=multi-user.target
