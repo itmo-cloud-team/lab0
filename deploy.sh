@@ -5,6 +5,8 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+pacman -Syu git python3 mariadb
+
 read -p "Choose username [teamairlines]: " username
 username=${username:-teamairlines}
 
@@ -33,6 +35,7 @@ mkdir /var/teamairlines && cd $_
 git clone https://github.com/itmo-cloud-team/lab0 && cd lab0
 chown -R teamairlines:
 python3 -m venv .venv && source $_/bin/activate
+pip3 install -r requirements.txt
 
 mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 systemctl enable --now mariadb.service
