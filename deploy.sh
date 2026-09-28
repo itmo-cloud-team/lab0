@@ -39,14 +39,16 @@ mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 systemctl enable --now mariadb.service
 echo "mysql:$db_password" | chpasswd
 
-sed -i "s/HOST/$host/g" config.json.sample
-sed -i "s/PORT/$port/g" config.json.sample
-sed -i "s/DB_PASSWORD/$db_password/g" config.json.sample
+sed -i "s/%host%/$host/g" config.json.sample
+sed -i "s/%port%/$port/g" config.json.sample
+sed -i "s/%db_password%/$db_password/g" config.json.sample
 mv config.json.sample config.json
 
-mariadb -u mysql --password=$db_password < init.sql
+sed -i "s/%db_password%/$db_password/g" init.sql
+mariadb < init.sql
 
-sed -i "s/%dir%/$(pwd)/g" teamairlines.service
+current_dir=$(pwd)
+sed -i "s/%dir%/$current_dir/g" teamairlines.service
 sed -i "s/%username%/$username/g" teamairlines.service
 cp teamairlines.service /etc/systemd/system/
 
