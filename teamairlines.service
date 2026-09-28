@@ -1,5 +1,5 @@
 [Unit]
-Description=TeamAirlines App
+Description=TeamAirlines Application
 After=network.target
 StartLimitIntervalSec=0
 
