@@ -48,7 +48,7 @@ sed -i "s/%db_password%/$db_password/g" init.sql
 mariadb < init.sql
 
 current_dir=$(pwd)
-sed -i "s/%dir%/$current_dir/g" teamairlines.service
+sed -i "s|%dir%|$current_dir|g" teamairlines.service
 sed -i "s/%username%/$username/g" teamairlines.service
 cp teamairlines.service /etc/systemd/system/
 
