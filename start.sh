@@ -1,5 +1,7 @@
 #!/bin/bash
 
-cd $(dirname "$(realpath $0)")
+project_dir=$(dirname "$(realpath $0)")
+cd $project_dir
 source .venv/bin/activate
-python3 -m app.app
+cd app
+python3 app.py --config="$project_dir/config.json"
