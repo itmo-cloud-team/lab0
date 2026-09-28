@@ -5,7 +5,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-pacman -Syu git python3 mariadb
+echo "Make sure the dependencies are installed."
 
 read -p "Choose username [teamairlines]: " username
 username=${username:-teamairlines}
