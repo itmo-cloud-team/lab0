@@ -31,9 +31,7 @@ do
 read -p "Enter DB password: " db_password
 done
 
-mkdir /var/teamairlines && cd $_
-git clone https://github.com/itmo-cloud-team/lab0 && cd lab0
-chown -R teamairlines:
+chown -R $username:$username ./
 python3 -m venv .venv && source $_/bin/activate
 pip3 install -r requirements.txt
 
